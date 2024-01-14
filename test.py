@@ -11,8 +11,8 @@ class ListParserTestCase(unittest.TestCase):
 
     def test_tokenise(self):
         parser = LispParser('(first (list 1 (+ 2 3) 9))')
-        result = parser.tokenise()
+        result = [token.value for token in parser.tokenise()]
         self.assertEqual(
-            result,
-            ['(', 'first', '(', 'list', '1', '(', '+', '2', '3', ')', '9', ')', ')']
+            ['(', 'first', '(', 'list', 1, '(', '+', 2, 3, ')', 9, ')', ')'],
+            result
         )
