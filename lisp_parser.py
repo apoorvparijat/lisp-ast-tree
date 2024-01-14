@@ -121,7 +121,7 @@ class LispParser:
                         next_expression
                     )
                 )
-                i = j - 1
+                i = j + 1
             else:
                 if token.value == "+":
                     ast_.children.append(
@@ -129,8 +129,6 @@ class LispParser:
                             token
                         )
                     )  # SymbolNode
-                elif token.value == ")":
-                    pass
                 elif token:
                     ast_.children.append(
                         Node(
@@ -143,7 +141,7 @@ class LispParser:
     def get_next_expression_tokens(self, tokens, start_index):
         j = start_index
         tokens_to_call = []
-        counter = 1
+        counter = 0
         while (j < len(
                 tokens
         )):
@@ -151,11 +149,11 @@ class LispParser:
                 counter += 1
             elif tokens[j].value == ")":
                 counter -= 1
-            if counter == 0:
-                break
             tokens_to_call.append(
                 tokens[j]
             )
+            if counter == 0:
+                break
             j += 1
         return tokens_to_call, j
 
