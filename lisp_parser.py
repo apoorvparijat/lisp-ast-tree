@@ -7,6 +7,27 @@ class LispParser:
     def __init__(self, input_string):
         self.input_string = input_string
 
+    def validate(self):
+        return self.validate_parentheses()
+
+    def validate_parentheses(self):
+        # Return True if parentheses are balanced
+        stack = []
+        for char in self.input_string:
+            if char == "(":
+                stack.append(
+                    char
+                )
+            elif char == ")":
+                if len(
+                        stack
+                ) == 0:
+                    return False
+                stack.pop()
+        return len(
+            stack
+        ) == 0
+
     def tokenise(self) -> list:
         # Return array of tokens
         tokenised = []
@@ -92,6 +113,9 @@ class LispParser:
         return tokenised
 
     def parse(self):
+        if not self.validate():
+            raise Exception("Invalid input string")
+
         # Return root node of AST tree
         return self.ast_tree(
             self.tokenise()

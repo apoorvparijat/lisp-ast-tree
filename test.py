@@ -4,6 +4,18 @@ from lisp_parser import LispParser
 
 
 class ListParserTestCase(unittest.TestCase):
+    def test_validate_1(self):
+        parser = LispParser('(first (list 1 (+ 2 3) 9))')
+        result = parser.validate()
+        self.assertTrue(
+            result
+        )
+        parser = LispParser('(first (list 1 (+ 2 3) 9)')
+        result = parser.validate()
+        self.assertFalse(
+            result
+        )
+
     def test_parse_1(self):
         parser = LispParser('(first (list 1 (+ 2 3) 9))')
         result = parser.as_list()
